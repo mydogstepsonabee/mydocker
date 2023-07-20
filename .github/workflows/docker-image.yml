@@ -1,0 +1,34 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag myshoppingapp:$(date +%s)
+      
+    - name: TCS CLI Scan
+        env:
+          TCS_CLI_DOWNLOAD_URL: ${{ secrets.TCS_CLI_DOWNLOAD_URL }}
+          TCS_TOKEN: ${{ secrets.TCS_TOKEN }}
+          TCS_PROJECT_ID: "$TCS_PROJECT_ID"
+        
+        run: |
+          echo ~~~~~Installation of TCS CLI..
+          wget $TCS_CLI_DOWNLOAD_URL
+          
+          file_name=`echo $TCS_CLI_DOWNLOAD_URL | cut -f10 -d "/"`
+          tar -xf $file_name && chmod +x tcs
+          
+          echo ~~~~~Starting TCS CLI Image scan ..
+          ./tcs consec image getting-started:new --wait
