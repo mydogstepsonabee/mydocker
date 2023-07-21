@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ "main" ]
 env:
-  DOCKER_IMAGE_TAG: $(date +%s)
+  IMAGE_TAG: "v1"
 jobs:
 
   build:
@@ -17,7 +17,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: 
-       docker build . --file Dockerfile --tag myshoppingapp:${{ env.DOCKER_IMAGE_TAG }}
+       docker build . --file Dockerfile --tag myshoppingapp:${{ env.IMAGE_TAG }}
       
     - name: TCS CLI Scan
       env:
@@ -33,4 +33,4 @@ jobs:
           tar -xf $file_name && chmod +x tcs
           
           echo ~~~~~Starting TCS CLI Image scan ..
-          ./tcs consec image myshoppingapp:${{ env.DOCKER_IMAGE_TAG }} --wait
+          ./tcs consec image myshoppingapp:${{ env.IMAGE_TAG }} --wait
