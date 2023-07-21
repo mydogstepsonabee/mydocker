@@ -15,13 +15,15 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag myshoppingapp:$(date +%s)
+      run: |
+       DATE_TAG=$(date +%s)
+       docker build . --file Dockerfile --tag myshoppingapp:$DATE_TAG
       
     - name: TCS CLI Scan
         env:
           TCS_CLI_DOWNLOAD_URL: ${{ secrets.TCS_CLI_DOWNLOAD_URL }}
           TCS_TOKEN: ${{ secrets.TCS_TOKEN }}
-          TCS_PROJECT_ID: "$TCS_PROJECT_ID"
+          TCS_PROJECT_ID: $${{ vars.TCS_PROJECT_ID }}
         
         run: |
           echo ~~~~~Installation of TCS CLI..
@@ -31,4 +33,4 @@ jobs:
           tar -xf $file_name && chmod +x tcs
           
           echo ~~~~~Starting TCS CLI Image scan ..
-          ./tcs consec image getting-started:new --wait
+          ./tcs consec image myshoppingapp:$DATE_TAG --wait
