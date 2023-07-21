@@ -20,12 +20,12 @@ jobs:
        docker build . --file Dockerfile --tag myshoppingapp:$DATE_TAG
       
     - name: TCS CLI Scan
-        env:
+      env:
           TCS_CLI_DOWNLOAD_URL: ${{ secrets.TCS_CLI_DOWNLOAD_URL }}
           TCS_TOKEN: ${{ secrets.TCS_TOKEN }}
           TCS_PROJECT_ID: $${{ vars.TCS_PROJECT_ID }}
         
-        run: |
+      run: |
           echo ~~~~~Installation of TCS CLI..
           wget $TCS_CLI_DOWNLOAD_URL
           
