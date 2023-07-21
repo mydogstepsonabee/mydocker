@@ -23,7 +23,7 @@ jobs:
       env:
           TCS_CLI_DOWNLOAD_URL: ${{ secrets.TCS_CLI_DOWNLOAD_URL }}
           TCS_TOKEN: ${{ secrets.TCS_TOKEN }}
-          TCS_PROJECT_ID: $${{ vars.TCS_PROJECT_ID }}
+          TCS_PROJECT_ID: ${{ vars.TCS_PROJECT_ID }}
         
       run: |
           echo ~~~~~Installation of TCS CLI..
