@@ -8,6 +8,6 @@ FROM ubuntu
 RUN apt-get update && apt-get -y install curl
 ENV URL https://google.com/this-will-fail?secret-token=
 EXPOSE 8080
-USER appuser
+USER root
 RUN rm /usr/bin/bash
 CMD ["sh", "-c", "curl --head $URL=$TOKEN"]
