@@ -7,6 +7,6 @@ ENV PASS=yxlosyr38slsd
 RUN apk add --no-cache gcc musl-dev linux-headers
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
-EXPOSE 80
+EXPOSE 8080
 COPY . .
 CMD ["flask", "run"]
